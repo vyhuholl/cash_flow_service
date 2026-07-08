@@ -7,8 +7,10 @@ invalid (non-integer) filter yields an empty list, never a 500. Catalog deletes
 trap ``ProtectedError`` and answer HTTP 409 naming the blocking children, so a
 protected parent delete — including a catalog row still referenced by a record
 — is a clean conflict rather than a server error. ``CashFlowRecord`` exposes
-plain CRUD at ``/api/records/``; records have no dependents, so any record is
-freely deletable.
+CRUD at ``/api/records/`` plus a filtered, table-ready list: the list action
+uses ``CashFlowRecordFilter`` (date period + reference filters), a
+label-carrying list serializer, and ``select_related`` to avoid N+1 queries.
+Records have no dependents, so any record is freely deletable.
 """
 
 from __future__ import annotations
@@ -19,7 +21,9 @@ from django.db.models import ProtectedError, QuerySet
 from rest_framework import status, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.serializers import BaseSerializer
 
+from cashflow.filters import CashFlowRecordFilter
 from cashflow.models import (
     CashFlowRecord,
     Category,
@@ -28,6 +32,7 @@ from cashflow.models import (
     Type,
 )
 from cashflow.serializers import (
+    CashFlowRecordListSerializer,
     CashFlowRecordSerializer,
     CategorySerializer,
     StatusSerializer,
@@ -99,5 +104,16 @@ class SubcategoryViewSet(CatalogViewSet):
 
 
 class CashFlowRecordViewSet(viewsets.ModelViewSet):
-    queryset = CashFlowRecord.objects.all()
+    # ``select_related`` the reference FKs so the list serializer resolves
+    # labels without an extra query per row; model ``Meta.ordering`` already
+    # sorts ``-created_date, -id`` for stable pagination.
+    queryset = CashFlowRecord.objects.select_related(
+        'status', 'type', 'category', 'subcategory'
+    )
     serializer_class = CashFlowRecordSerializer
+    filterset_class = CashFlowRecordFilter
+
+    def get_serializer_class(self) -> type[BaseSerializer]:
+        if self.action == 'list':
+            return CashFlowRecordListSerializer
+        return CashFlowRecordSerializer

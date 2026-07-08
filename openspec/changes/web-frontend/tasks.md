@@ -30,4 +30,4 @@
 - [ ] 5.1 Smoke tests: each route returns 200 and renders its shell
 - [ ] 5.2 Manual walkthrough: create → filter → edit → delete a record; verify cascading + client validation
 - [ ] 5.3 Manual walkthrough: add/edit/delete catalog entries incl. a blocked delete
-- [ ] 5.4 Run `ruff check`/`ruff format --check` on any Python added
+- [ ] 5.4 Run `make validate` if any Python added

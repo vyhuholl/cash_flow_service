@@ -93,3 +93,41 @@ class CashFlowRecordSerializer(serializers.ModelSerializer):
         if errors:
             raise serializers.ValidationError(errors)
         return attrs
+
+
+class CashFlowRecordListSerializer(serializers.ModelSerializer):
+    """Table-ready read serializer for the records list.
+
+    Carries the ТЗ table columns and resolves each reference foreign key to its
+    display name (``status`` may be null → ``status_name`` is null too) so the
+    client renders rows without extra lookups. Read-only; the viewset uses the
+    writable ``CashFlowRecordSerializer`` for create/retrieve/update.
+    """
+
+    status_name = serializers.CharField(
+        source='status.name', read_only=True, allow_null=True
+    )
+    type_name = serializers.CharField(source='type.name', read_only=True)
+    category_name = serializers.CharField(
+        source='category.name', read_only=True
+    )
+    subcategory_name = serializers.CharField(
+        source='subcategory.name', read_only=True
+    )
+
+    class Meta:
+        model = CashFlowRecord
+        fields = [
+            'id',
+            'created_date',
+            'status',
+            'status_name',
+            'type',
+            'type_name',
+            'category',
+            'category_name',
+            'subcategory',
+            'subcategory_name',
+            'amount',
+            'comment',
+        ]
