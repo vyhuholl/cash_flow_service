@@ -1,0 +1,168 @@
+{% extends 'cashflow/base.html' %}
+{% load static %}
+{% block title %}Справочники{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">Справочники</h1>
+
+  <div class="row g-4">
+    <section class="col-md-6" data-dict="statuses">
+      <h2 class="h5">Статусы</h2>
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody class="dict-list"></tbody>
+      </table>
+      <form class="dict-form row g-2">
+        <input type="hidden" name="id" />
+        <div class="col">
+          <input
+            class="form-control form-control-sm"
+            name="name"
+            placeholder="Название"
+            required
+          />
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary dict-cancel d-none"
+          >
+            Отмена
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="col-md-6" data-dict="types">
+      <h2 class="h5">Типы</h2>
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody class="dict-list"></tbody>
+      </table>
+      <form class="dict-form row g-2">
+        <input type="hidden" name="id" />
+        <div class="col">
+          <input
+            class="form-control form-control-sm"
+            name="name"
+            placeholder="Название"
+            required
+          />
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary dict-cancel d-none"
+          >
+            Отмена
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section
+      class="col-md-6"
+      data-dict="categories"
+      data-parent="type"
+      data-parent-endpoint="types"
+    >
+      <h2 class="h5">Категории</h2>
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Тип</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody class="dict-list"></tbody>
+      </table>
+      <form class="dict-form row g-2">
+        <input type="hidden" name="id" />
+        <div class="col">
+          <input
+            class="form-control form-control-sm"
+            name="name"
+            placeholder="Название"
+            required
+          />
+        </div>
+        <div class="col">
+          <select class="form-select form-select-sm dict-parent" name="type">
+            <option value="">Тип…</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary dict-cancel d-none"
+          >
+            Отмена
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section
+      class="col-md-6"
+      data-dict="subcategories"
+      data-parent="category"
+      data-parent-endpoint="categories"
+    >
+      <h2 class="h5">Подкатегории</h2>
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Категория</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody class="dict-list"></tbody>
+      </table>
+      <form class="dict-form row g-2">
+        <input type="hidden" name="id" />
+        <div class="col">
+          <input
+            class="form-control form-control-sm"
+            name="name"
+            placeholder="Название"
+            required
+          />
+        </div>
+        <div class="col">
+          <select
+            class="form-select form-select-sm dict-parent"
+            name="category"
+          >
+            <option value="">Категория…</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary dict-cancel d-none"
+          >
+            Отмена
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'cashflow/js/reference.js' %}"></script>
+{% endblock %}

@@ -6,8 +6,10 @@ ENV UV_COMPILE_BYTECODE=1 \
 
 WORKDIR /app
 
-COPY . /app
+COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen --no-dev
+
+COPY cash_flow_service/ ./app/
 
 CMD ["gunicorn", "cash_flow_service.wsgi:application", "--bind", "0.0.0.0:8000"]

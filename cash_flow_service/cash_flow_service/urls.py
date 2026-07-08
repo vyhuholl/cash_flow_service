@@ -37,4 +37,6 @@ urlpatterns = [
         name='redoc',
     ),
     path('api/', include('cashflow.urls')),
+    # Frontend pages at the project root (kept out of the /api/ namespace).
+    path('', include('cashflow.web_urls')),
 ]

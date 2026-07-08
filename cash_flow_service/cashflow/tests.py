@@ -546,3 +546,44 @@ def test_list_avoids_n_plus_one_queries(
     with django_assert_max_num_queries(3):
         response = api.get('/api/records/')
     assert response.status_code == 200
+
+
+# --- Frontend page shells (task 5.1) ---------------------------------------
+
+
+@pytest.mark.django_db
+def test_home_page_renders_shell(client: Client) -> None:
+    response = client.get('/')
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert 'Записи ДДС' in content
+    assert 'id="records-body"' in content
+    # ensure_csrf_cookie set the cookie the fetch helper echoes back.
+    assert 'csrftoken' in response.cookies
+
+
+@pytest.mark.django_db
+def test_record_new_page_renders_shell(client: Client) -> None:
+    response = client.get('/records/new')
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert 'id="record-form"' in content
+    assert '"recordId": null' in content
+
+
+@pytest.mark.django_db
+def test_record_edit_page_embeds_record_id(client: Client) -> None:
+    response = client.get('/records/7/edit')
+    assert response.status_code == 200
+    # The pk is embedded so the client-side loader fetches that record.
+    assert '"recordId": 7' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_reference_page_renders_shell(client: Client) -> None:
+    response = client.get('/reference')
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert 'Справочники' in content
+    for dictionary in ('statuses', 'types', 'categories', 'subcategories'):
+        assert f'data-dict="{dictionary}"' in content

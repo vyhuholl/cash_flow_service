@@ -1,0 +1,87 @@
+{% extends 'cashflow/base.html' %}
+{% load static %}
+{% block title %}Записи ДДС{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Записи ДДС</h1>
+    <a class="btn btn-primary" href="/records/new">Добавить запись</a>
+  </div>
+
+  <form id="filters" class="row g-2 align-items-end mb-3">
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-date-from">С даты</label>
+      <input type="date" class="form-control" id="f-date-from" name="date_from" />
+    </div>
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-date-to">По дату</label>
+      <input type="date" class="form-control" id="f-date-to" name="date_to" />
+    </div>
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-status">Статус</label>
+      <select class="form-select" id="f-status" name="status">
+        <option value="">Все</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-type">Тип</label>
+      <select class="form-select" id="f-type" name="type">
+        <option value="">Все</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-category">Категория</label>
+      <select class="form-select" id="f-category" name="category">
+        <option value="">Все</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label class="form-label mb-1" for="f-subcategory">Подкатегория</label>
+      <select class="form-select" id="f-subcategory" name="subcategory">
+        <option value="">Все</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-outline-primary">Применить</button>
+      <button type="button" id="clear-filters" class="btn btn-outline-secondary">
+        Сбросить
+      </button>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Статус</th>
+          <th>Тип</th>
+          <th>Категория</th>
+          <th>Подкатегория</th>
+          <th class="text-end">Сумма, ₽</th>
+          <th>Комментарий</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="records-body">
+        <tr>
+          <td colspan="8" class="text-center text-muted">Загрузка…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <nav class="d-flex justify-content-between align-items-center">
+    <span id="records-count" class="text-muted small"></span>
+    <div class="btn-group">
+      <button id="prev-page" class="btn btn-outline-secondary" disabled>
+        ← Назад
+      </button>
+      <button id="next-page" class="btn btn-outline-secondary" disabled>
+        Вперёд →
+      </button>
+    </div>
+  </nav>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'cashflow/js/records_list.js' %}"></script>
+{% endblock %}

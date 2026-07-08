@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}ДДС{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'cashflow/css/bootstrap.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'cashflow/css/app.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="/">ДДС</a>
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Записи</a>
+          <a class="nav-link" href="/reference">Справочники</a>
+        </div>
+      </div>
+    </nav>
+    <main class="container">
+      <div id="alerts"></div>
+      {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'cashflow/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'cashflow/js/api.js' %}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

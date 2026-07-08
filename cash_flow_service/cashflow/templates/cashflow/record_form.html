@@ -1,0 +1,80 @@
+{% extends 'cashflow/base.html' %}
+{% load static %}
+{% block title %}
+  {% if record_id %}Изменить запись{% else %}Новая запись{% endif %}
+{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-3" id="form-title">Новая запись</h1>
+
+  <form id="record-form" class="col-lg-6" novalidate>
+    <div class="mb-3">
+      <label class="form-label" for="created_date">Дата</label>
+      <input type="date" class="form-control" id="created_date" name="created_date" />
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="status">Статус</label>
+      <select class="form-select" id="status" name="status">
+        <option value="">— не выбран —</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="type">
+        Тип <span class="text-danger">*</span>
+      </label>
+      <select class="form-select" id="type" name="type">
+        <option value="">— выберите —</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="category">
+        Категория <span class="text-danger">*</span>
+      </label>
+      <select class="form-select" id="category" name="category" disabled>
+        <option value="">—</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="subcategory">
+        Подкатегория <span class="text-danger">*</span>
+      </label>
+      <select class="form-select" id="subcategory" name="subcategory" disabled>
+        <option value="">—</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="amount">
+        Сумма, ₽ <span class="text-danger">*</span>
+      </label>
+      <input
+        type="number"
+        step="0.01"
+        min="0.01"
+        class="form-control"
+        id="amount"
+        name="amount"
+      />
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="comment">Комментарий</label>
+      <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+      <div class="invalid-feedback"></div>
+    </div>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+      <a href="/" class="btn btn-outline-secondary">Отмена</a>
+    </div>
+  </form>
+
+  <script id="form-config" type="application/json">
+    {"recordId": {{ record_id|default:"null" }}}
+  </script>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'cashflow/js/record_form.js' %}"></script>
+{% endblock %}

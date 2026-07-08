@@ -1,0 +1,18 @@
+/* Small app-specific tweaks layered on top of Bootstrap. */
+
+body {
+  padding-bottom: 3rem;
+}
+
+.navbar-nav .nav-link {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+/* Always show field-level validation text once we set it. */
+.invalid-feedback {
+  display: none;
+}
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}

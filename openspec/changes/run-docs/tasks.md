@@ -8,7 +8,7 @@
 
 - [ ] 2.1 Add a `Dockerfile` (`python:3.14-slim` + `uv sync --frozen`, copy project)
 - [ ] 2.2 Add an entrypoint that runs `migrate` → `seed_demo` → serves the app on an exposed port
-- [ ] 2.3 Add `.dockerignore` (`.venv`, caches, `db.sqlite3`, the PDF)
+- [ ] 2.3 Add `.dockerignore` (`.venv`, caches, `db.sqlite3`)
 - [ ] 2.4 (Optional) Add `docker-compose.yml` with a volume for `db.sqlite3` so data persists
 
 ## 3. README
