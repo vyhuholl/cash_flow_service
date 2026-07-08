@@ -1,0 +1,54 @@
+[project]
+name = "cash-flow-service"
+version = "1.0.0"
+description = "Веб-сервис для управления движением денежных средств"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.0.7",
+    "django-filter>=25.2",
+    "djangorestframework>=3.17.1",
+    "drf-spectacular>=0.30.0",
+    "gunicorn>=26.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "django-stubs>=6.0.6",
+    "djangorestframework-stubs>=3.17.0",
+    "mypy>=2.2.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.12.0",
+    "ruff>=0.15.20",
+    "types-django-filter>=25.2.0.20260508",
+]
+
+[tool.ruff]
+fix = true
+line-length = 79
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "cash_flow_service.settings"
+# The Django project lives in the nested `cash_flow_service/` package dir;
+# add it to sys.path so `cash_flow_service.settings` and `cashflow` import.
+pythonpath = ["cash_flow_service"]
+testpaths = ["cash_flow_service"]
+python_files = ["test_*.py", "tests.py"]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+# Same nested layout as pytest: let mypy resolve the project package.
+mypy_path = "cash_flow_service"
+
+[tool.django-stubs]
+django_settings_module = "cash_flow_service.settings"
+
+# drf-spectacular ships no type stubs / py.typed marker (DRF and
+# django-filter are covered by djangorestframework-stubs / types-django-filter).
+[[tool.mypy.overrides]]
+module = ["drf_spectacular.*"]
+ignore_missing_imports = true
