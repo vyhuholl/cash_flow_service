@@ -27,31 +27,6 @@
 ### Управление справочниками
 ![Справочники](docs/images/reference.png)
 
-## Технологический стек
-
-### Backend
-
-- **Python 3.14**
-- **Django 6** + Django ORM
-- **Django REST Framework** — REST API
-- **django-filter** — фильтрация списков
-- **drf-spectacular** — OpenAPI-документация
-- **gunicorn** — production-сервер
-- **SQLite** — база данных
-
-### Frontend
-
-- Django-шаблоны + Bootstrap 5
-- Vanilla JavaScript (fetch API)
-
-### DevOps
-
-- **uv** — менеджер зависимостей
-- **Docker** — контейнеризация
-- **ruff** — форматтер и линтер (79 символов, одинарные кавычки)
-- **mypy** + django-stubs — статическая типизация
-- **pytest** + pytest-django + pytest-cov — тестирование
-
 ## Установка и запуск
 
 ### Локальная разработка
@@ -88,6 +63,31 @@ docker run -p 8000:8000 cash-flow-service
 3. Запускается gunicorn на `0.0.0.0:8000`
 
 Сервис будет доступен по адресу `http://localhost:8000`
+
+## Технологический стек
+
+### Backend
+
+- **Python 3.14**
+- **Django 6** + Django ORM
+- **Django REST Framework** — REST API
+- **django-filter** — фильтрация списков
+- **drf-spectacular** — OpenAPI-документация
+- **gunicorn** — production-сервер
+- **SQLite** — база данных
+
+### Frontend
+
+- Django-шаблоны + Bootstrap 5
+- Vanilla JavaScript (fetch API)
+
+### DevOps
+
+- **uv** — менеджер зависимостей
+- **Docker** — контейнеризация
+- **ruff** — форматтер и линтер (79 символов, одинарные кавычки)
+- **mypy** + django-stubs — статическая типизация
+- **pytest** + pytest-django + pytest-cov — тестирование
 
 ## API endpoints
 
