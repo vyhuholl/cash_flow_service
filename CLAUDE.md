@@ -45,5 +45,5 @@ Django-проект лежит во вложенной директории `cas
 Работа спланирована как OpenSpec changes в `openspec/changes/` (6 изменений,
 реализуются по порядку зависимостей: `bootstrap-django-app` →
 `reference-catalog` → `cash-flow-records` → `records-list-filtering` →
-`web-frontend` → `run-docs`). Каждое изменение содержит proposal / specs /
+`web-frontend`). Каждое изменение содержит proposal / specs /
 design / tasks. Реализация — через `/opsx:apply <change>`.

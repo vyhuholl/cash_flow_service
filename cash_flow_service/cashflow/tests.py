@@ -15,6 +15,7 @@ from decimal import Decimal
 from typing import Any
 
 import pytest
+from django.core.management import call_command
 from django.test import Client
 from rest_framework import status as http_status
 from rest_framework.test import APIClient
@@ -587,3 +588,26 @@ def test_reference_page_renders_shell(client: Client) -> None:
     assert 'Справочники' in content
     for dictionary in ('statuses', 'types', 'categories', 'subcategories'):
         assert f'data-dict="{dictionary}"' in content
+
+
+# --- seed_demo management command ------------------------------------------
+
+
+def _catalog_counts() -> tuple[int, int, int, int, int]:
+    return (
+        Status.objects.count(),
+        Type.objects.count(),
+        Category.objects.count(),
+        Subcategory.objects.count(),
+        CashFlowRecord.objects.count(),
+    )
+
+
+@pytest.mark.django_db
+def test_seed_demo_populates_and_is_idempotent() -> None:
+    call_command('seed_demo')
+    assert _catalog_counts() == (3, 2, 2, 4, 5)
+
+    # A second run must not duplicate anything (get_or_create).
+    call_command('seed_demo')
+    assert _catalog_counts() == (3, 2, 2, 4, 5)

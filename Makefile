@@ -1,4 +1,4 @@
-.PHONY: format lint type-check validate test makemigrations migrate
+.PHONY: format lint type-check validate test makemigrations migrate seed
 
 RUN_CMD := uv run
 
@@ -21,3 +21,6 @@ makemigrations:
 
 migrate:
 	$(RUN_CMD) cash_flow_service/manage.py migrate
+
+seed:
+	$(RUN_CMD) cash_flow_service/manage.py seed_demo
