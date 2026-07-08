@@ -1,4 +1,4 @@
-.PHONY: format lint type-check validate test
+.PHONY: format lint type-check validate test makemigrations migrate
 
 RUN_CMD := uv run
 
@@ -15,3 +15,9 @@ validate: format lint type-check
 
 test:
 	$(RUN_CMD) pytest --cov=.
+
+makemigrations:
+	$(RUN_CMD) cash_flow_service/manage.py makemigrations ${MSG}
+
+migrate:
+	$(RUN_CMD) cash_flow_service/manage.py migrate
