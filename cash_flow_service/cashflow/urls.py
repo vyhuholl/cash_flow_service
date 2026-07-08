@@ -8,6 +8,7 @@ no further URLconf edits.
 from rest_framework.routers import DefaultRouter
 
 from cashflow.views import (
+    CashFlowRecordViewSet,
     CategoryViewSet,
     StatusViewSet,
     SubcategoryViewSet,
@@ -19,5 +20,6 @@ router.register('statuses', StatusViewSet)
 router.register('types', TypeViewSet)
 router.register('categories', CategoryViewSet)
 router.register('subcategories', SubcategoryViewSet)
+router.register('records', CashFlowRecordViewSet)
 
 urlpatterns = router.urls

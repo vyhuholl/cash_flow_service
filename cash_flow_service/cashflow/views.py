@@ -1,11 +1,14 @@
-"""DRF viewsets for the reference catalog.
+"""DRF viewsets for the catalog and cash-flow records.
 
 Each dictionary is a ``ModelViewSet`` registered on the ``/api/`` router.
 ``Category`` and ``Subcategory`` list reads are hierarchy-scoped via ``?type=``
 / ``?category=`` query params so a client can populate dependent dropdowns; an
-invalid (non-integer) filter yields an empty list, never a 500. Deletes trap
-``ProtectedError`` and answer HTTP 409 naming the blocking children, so a
-protected parent delete is a clean conflict rather than a server error.
+invalid (non-integer) filter yields an empty list, never a 500. Catalog deletes
+trap ``ProtectedError`` and answer HTTP 409 naming the blocking children, so a
+protected parent delete — including a catalog row still referenced by a record
+— is a clean conflict rather than a server error. ``CashFlowRecord`` exposes
+plain CRUD at ``/api/records/``; records have no dependents, so any record is
+freely deletable.
 """
 
 from __future__ import annotations
@@ -17,8 +20,15 @@ from rest_framework import status, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from cashflow.models import Category, Status, Subcategory, Type
+from cashflow.models import (
+    CashFlowRecord,
+    Category,
+    Status,
+    Subcategory,
+    Type,
+)
 from cashflow.serializers import (
+    CashFlowRecordSerializer,
     CategorySerializer,
     StatusSerializer,
     SubcategorySerializer,
@@ -86,3 +96,8 @@ class SubcategoryViewSet(CatalogViewSet):
                 return queryset.none()
             queryset = queryset.filter(category_id=int(category_id))
         return queryset
+
+
+class CashFlowRecordViewSet(viewsets.ModelViewSet):
+    queryset = CashFlowRecord.objects.all()
+    serializer_class = CashFlowRecordSerializer
