@@ -82,13 +82,13 @@
         actionsTd.className = 'text-end text-nowrap';
         const edit = document.createElement('button');
         edit.type = 'button';
-        edit.className = 'btn btn-sm btn-outline-secondary me-1';
-        edit.textContent = 'Изм.';
+        edit.className = 'btn btn-sm btn-outline-primary me-1';
+        edit.textContent = 'Изменить';
         edit.addEventListener('click', () => this.startEdit(item));
         const del = document.createElement('button');
         del.type = 'button';
-        del.className = 'btn btn-sm btn-outline-danger';
-        del.textContent = 'Удал.';
+        del.className = 'btn btn-sm btn-danger';
+        del.textContent = 'Удалить';
         del.addEventListener('click', () => this.remove(item));
         actionsTd.append(edit, del);
         tr.appendChild(actionsTd);

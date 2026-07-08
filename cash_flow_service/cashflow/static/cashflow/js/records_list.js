@@ -24,6 +24,16 @@
     return filters.querySelector('[name="' + name + '"]');
   }
 
+  function formatDate(dateStr) {
+    // Parse ISO date and format as DD.MM.YY
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+    return day + '.' + month + '.' + year;
+  }
+
   function cell(text, className) {
     const td = document.createElement('td');
     td.textContent = text === null || text === undefined ? '' : String(text);
@@ -80,7 +90,7 @@
     }
     records.forEach((record) => {
       const tr = document.createElement('tr');
-      tr.appendChild(cell(record.created_date));
+      tr.appendChild(cell(formatDate(record.created_date)));
       tr.appendChild(cell(record.status_name || '—'));
       tr.appendChild(cell(record.type_name));
       tr.appendChild(cell(record.category_name));
@@ -91,12 +101,12 @@
       const actions = document.createElement('td');
       actions.className = 'text-nowrap';
       const edit = document.createElement('a');
-      edit.className = 'btn btn-sm btn-outline-secondary me-1';
+      edit.className = 'btn btn-sm btn-outline-primary me-1';
       edit.href = '/records/' + record.id + '/edit';
       edit.textContent = 'Изменить';
       const del = document.createElement('button');
       del.type = 'button';
-      del.className = 'btn btn-sm btn-outline-danger';
+      del.className = 'btn btn-sm btn-danger';
       del.textContent = 'Удалить';
       del.addEventListener('click', () => deleteRecord(record));
       actions.append(edit, del);
@@ -120,7 +130,7 @@
   }
 
   async function deleteRecord(record) {
-    const label = record.created_date + ' — ' + record.amount + ' ₽';
+    const label = formatDate(record.created_date) + ' — ' + record.amount + ' ₽';
     if (!window.confirm('Удалить запись «' + label + '»?')) {
       return;
     }
