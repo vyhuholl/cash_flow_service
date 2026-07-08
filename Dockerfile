@@ -10,6 +10,9 @@ COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen --no-dev
 
-COPY cash_flow_service/ ./app/
+COPY cash_flow_service/ ./cash_flow_service/
+COPY docker-entrypoint.sh /usr/local/bin/
 
-CMD ["gunicorn", "cash_flow_service.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
